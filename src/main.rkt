@@ -1,6 +1,4 @@
 ;#lang racket
-(load "./debug.rkt")
-
 (define (eval exp env)
   (cond ((self-evaluating? exp) exp)
         ((variable? exp) (lookup-variable-value exp env))
@@ -244,10 +242,10 @@
       (cond ((null? vars)
              (env-loop (enclosing-environment env)))
             ((eq? var (car vars))
-             (if (eq? car vals '*unassigned*')
+             (if (eq? (car vals) '*unassigned*)
                  (error "Unassigned variable: " (car vars))
                  
-                 (car vals)))S
+                 (car vals)))
             (else (scan (cdr vars) (cdr vals)))))
     (if (eq? env the-empty-environment)
       (error "Unbound variable" var)
